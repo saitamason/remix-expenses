@@ -1,3 +1,3 @@
-export default function AddExpense() {
+export default function AddExpensePage() {
   return <p>Add an expense</p>;
 }

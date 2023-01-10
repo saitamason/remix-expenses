@@ -1,3 +1,3 @@
 export default function Index() {
-  return <p>Home</p>;
+  return <h1>Home Page</h1>;
 }

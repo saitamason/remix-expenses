@@ -1,3 +1,3 @@
-export default function ExpenseDetails() {
+export default function ExpenseDetailsPage() {
   return <p>View/edit expense</p>;
 }

@@ -1,3 +1,3 @@
-export default function ExpenseAnalytics() {
+export default function ExpenseAnalyticsPage() {
   return <p>Expense analytics</p>;
 }
