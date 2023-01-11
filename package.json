@@ -17,6 +17,7 @@
     "react-icons": "^4.7.1"
   },
   "devDependencies": {
+    "@prisma/client": "^4.8.1",
     "@remix-run/dev": "^1.10.0",
     "@remix-run/eslint-config": "^1.10.0",
     "@types/react": "^18.0.25",
