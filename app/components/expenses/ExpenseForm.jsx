@@ -7,6 +7,11 @@ function ExpenseForm() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state !== "idle";
 
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = `${now.getMonth() + 1}`.padStart(2, "0");
+  const day = now.getDate();
+
   return (
     <Form method="post" className="form" id="expense-form">
       <p>
@@ -28,7 +33,14 @@ function ExpenseForm() {
         </p>
         <p>
           <label htmlFor="date">Date</label>
-          <input type="date" id="date" name="date" max={today} required />
+          <input
+            type="date"
+            id="date"
+            name="date"
+            max={today}
+            defaultValue={`${year}-${month}-${day}`}
+            required
+          />
         </p>
       </div>
       {validationErrors && (
