@@ -1,4 +1,4 @@
-import { Form, Link, useFetcher } from "@remix-run/react";
+import { Link, useFetcher } from "@remix-run/react";
 
 function ExpenseListItem({ id, title, amount }) {
   const fetcher = useFetcher();
