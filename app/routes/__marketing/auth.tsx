@@ -16,6 +16,8 @@ export const action: ActionFunction = async ({ request }) => {
     password: string;
   };
 
+  // validate user input
+
   if (authMode === "login") {
     // login logic
   } else {

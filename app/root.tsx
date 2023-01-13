@@ -1,13 +1,18 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type { CatchBoundaryComponent } from "@remix-run/react/dist/routeModules";
+import type { PropsWithChildren } from "react";
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
 } from "@remix-run/react";
 
+import Error from "~/components/util/Error";
 import sharedStyles from "~/styles/shared.css";
 
 export const meta: MetaFunction = () => ({
@@ -16,10 +21,14 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
 });
 
-export default function App() {
+const Document = ({
+  title,
+  children,
+}: PropsWithChildren<{ title?: string }>) => {
   return (
     <html lang="en">
       <head>
+        <title>{title}</title>
         <Meta />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -34,14 +43,42 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        {children}
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
       </body>
     </html>
   );
+};
+
+export default function App() {
+  return (
+    <Document>
+      <Outlet />
+    </Document>
+  );
 }
+
+export const CatchBoundary: CatchBoundaryComponent = () => {
+  const caughtResponse = useCatch();
+
+  return (
+    <Document title={caughtResponse.statusText}>
+      <main>
+        <Error title={caughtResponse.statusText}>
+          <p>
+            {caughtResponse.data?.message ||
+              "Something went wrong. Please try again later."}
+          </p>
+          <p>
+            Back to <Link to="/">safety</Link>.
+          </p>
+        </Error>
+      </main>
+    </Document>
+  );
+};
 
 export const links: LinksFunction = () => [
   {
