@@ -1,22 +1,43 @@
-import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "@remix-run/react";
 
 function ExpenseForm() {
   const today = new Date().toISOString().slice(0, 10); // yields something like 2023-09-10
   const validationErrors = useActionData();
+  const expense = useLoaderData();
+
+  const defaultValues = expense
+    ? {
+        title: expense.title,
+        amount: expense.amount,
+        date: expense.date,
+      }
+    : {
+        title: "",
+        amount: "",
+        date: new Date().toISOString(),
+      };
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state !== "idle";
-
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = `${now.getMonth() + 1}`.padStart(2, "0");
-  const day = now.getDate();
 
   return (
     <Form method="post" className="form" id="expense-form">
       <p>
         <label htmlFor="title">Expense Title</label>
-        <input type="text" id="title" name="title" required maxLength={30} />
+        <input
+          type="text"
+          id="title"
+          name="title"
+          defaultValue={defaultValues.title}
+          required
+          maxLength={30}
+        />
       </p>
 
       <div className="form-row">
@@ -28,6 +49,7 @@ function ExpenseForm() {
             name="amount"
             min="0"
             step="0.01"
+            defaultValue={defaultValues.amount}
             required
           />
         </p>
@@ -38,7 +60,7 @@ function ExpenseForm() {
             id="date"
             name="date"
             max={today}
-            defaultValue={`${year}-${month}-${day}`}
+            defaultValue={defaultValues.date.slice(0, 10)}
             required
           />
         </p>
