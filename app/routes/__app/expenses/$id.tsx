@@ -43,6 +43,6 @@ export const action: ActionFunction = async ({ params, request }) => {
 
   if (request.method === "DELETE") {
     await deleteExpense(expenseId);
-    return redirect("/expenses");
+    return { deletedId: expenseId };
   }
 };
