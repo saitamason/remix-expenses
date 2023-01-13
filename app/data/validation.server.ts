@@ -1,4 +1,4 @@
-import type { ExpenseString } from "~/types";
+import type { Expense } from "~/types";
 
 function isValidTitle(value: string) {
   return value && value.trim().length > 0 && value.trim().length <= 30;
@@ -16,7 +16,7 @@ function isValidDate(value: string) {
 export function validateExpenseInput(input: {
   [k: string]: FormDataEntryValue;
 }) {
-  let validationErrors: Partial<ExpenseString> = {};
+  let validationErrors: Partial<Expense> = {};
 
   if (typeof input.title === "string" && !isValidTitle(input.title)) {
     validationErrors.title =
