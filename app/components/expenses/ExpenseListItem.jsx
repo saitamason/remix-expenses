@@ -2,6 +2,7 @@ import { Link, useFetcher } from "@remix-run/react";
 
 function ExpenseListItem({ id, title, amount }) {
   const fetcher = useFetcher();
+
   function deleteExpenseItemHandler() {
     const proceed = confirm(
       `Are you sure? Do you want to delete an expense titled "${title}"?`
@@ -13,6 +14,14 @@ function ExpenseListItem({ id, title, amount }) {
       method: "delete",
       action: `/expenses/${id}`,
     });
+  }
+
+  if (fetcher.state !== "idle") {
+    return (
+      <article className="expense-item locked">
+        <p>Deleting...</p>
+      </article>
+    );
   }
 
   return (
