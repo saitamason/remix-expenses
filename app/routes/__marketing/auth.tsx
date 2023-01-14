@@ -1,6 +1,11 @@
 import type { ActionFunction, LinksFunction } from "@remix-run/node";
+import type { Credentials } from "~/types";
+import type { HttpError } from "~/data/auth.server";
+import { redirect } from "@remix-run/node";
+import { signup } from "~/data/auth.server";
 import AuthForm from "~/components/auth/AuthForm";
 import authStyles from "~/styles/auth.css";
+import { validateCredentials } from "~/data/validation.server";
 
 export default function AuthPage() {
   return <AuthForm />;
@@ -11,17 +16,24 @@ export const action: ActionFunction = async ({ request }) => {
   const authMode = searchParams.get("mode") || "login";
 
   const formData = await request.formData();
-  const credentials = Object.fromEntries(formData) as {
-    email: string;
-    password: string;
-  };
+  const credentials = Object.fromEntries(formData) as unknown as Credentials;
 
-  // validate user input
+  try {
+    validateCredentials(credentials);
+  } catch (error) {
+    return error;
+  }
 
-  if (authMode === "login") {
-    // login logic
-  } else {
-    // signup logic
+  try {
+    if (authMode === "login") {
+      // login logic
+    } else {
+      await signup(credentials);
+      return redirect("/expenses");
+    }
+  } catch (error) {
+    if ((error as HttpError).status === 422)
+      return { credentials: (error as HttpError).message };
   }
 };
 
