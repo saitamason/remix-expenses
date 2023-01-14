@@ -12,10 +12,14 @@ function ExpenseForm() {
   const validationErrors = useActionData();
   const params = useParams();
   const matches = useMatches();
+  const navigation = useNavigation();
+
   const expenses = matches.find(
     (match) => match.id === "routes/__app/expenses"
   ).data;
   const expense = expenses.find((expense) => expense.id === params.id);
+
+  if (params.id && !expense) return <p>Invalid expense id.</p>;
 
   const defaultValues = expense
     ? {
@@ -29,7 +33,6 @@ function ExpenseForm() {
         date: new Date().toISOString(),
       };
 
-  const navigation = useNavigation();
   const isSubmitting = navigation.state !== "idle";
 
   return (
