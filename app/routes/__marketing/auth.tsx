@@ -1,7 +1,7 @@
 import type { ActionFunction, LinksFunction } from "@remix-run/node";
 import type { Credentials } from "~/types";
 import type { HttpError } from "~/data/auth.server";
-import { redirect } from "@remix-run/node";
+import { login } from "~/data/auth.server";
 import { signup } from "~/data/auth.server";
 import AuthForm from "~/components/auth/AuthForm";
 import authStyles from "~/styles/auth.css";
@@ -26,10 +26,9 @@ export const action: ActionFunction = async ({ request }) => {
 
   try {
     if (authMode === "login") {
-      // login logic
+      return await login(credentials);
     } else {
-      await signup(credentials);
-      return redirect("/expenses");
+      return await signup(credentials);
     }
   } catch (error) {
     if ((error as HttpError).status === 422)
