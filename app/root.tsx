@@ -1,4 +1,8 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type {
+  ErrorBoundaryComponent,
+  LinksFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import type { CatchBoundaryComponent } from "@remix-run/react/dist/routeModules";
 import type { PropsWithChildren } from "react";
 import {
@@ -70,6 +74,23 @@ export const CatchBoundary: CatchBoundaryComponent = () => {
           <p>
             {caughtResponse.data?.message ||
               "Something went wrong. Please try again later."}
+          </p>
+          <p>
+            Back to <Link to="/">safety</Link>.
+          </p>
+        </Error>
+      </main>
+    </Document>
+  );
+};
+
+export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
+  return (
+    <Document title="An error occurred">
+      <main>
+        <Error title="An error occurred">
+          <p>
+            {error.message || "Something went wrong. Please try again later."}
           </p>
           <p>
             Back to <Link to="/">safety</Link>.
