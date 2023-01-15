@@ -32,7 +32,7 @@ const Document = ({
   return (
     <html lang="en">
       <head>
-        <title>{title}</title>
+        {title && <title>{title}</title>}
         <Meta />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
