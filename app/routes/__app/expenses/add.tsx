@@ -1,4 +1,4 @@
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { useNavigate } from "@remix-run/react";
 import ExpenseForm from "~/components/expenses/ExpenseForm";
@@ -6,6 +6,11 @@ import Modal from "~/components/util/Modal";
 import { requireUserSession } from "~/data/auth.server";
 import { addExpense } from "~/data/expenses.server";
 import { validateExpenseInput } from "~/data/validation.server";
+
+export const meta: MetaFunction = () => ({
+  title: "Add New Expense - RemixExpenses",
+  description: "Add new expense. Provide title, amount and date.",
+});
 
 export default function AddExpensePage() {
   const navigate = useNavigate();

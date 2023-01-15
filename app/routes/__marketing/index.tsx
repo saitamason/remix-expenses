@@ -1,5 +1,12 @@
+import type { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { FaArrowRight, FaDollarSign, FaChartBar } from "react-icons/fa";
+
+export const meta: MetaFunction = () => ({
+  title: "RemixExpenses - The Complete Expenses Manager",
+  description:
+    "Manage your expenses with ease. Easily add and delete expenses, set the date and amount. An application created with Remix!",
+});
 
 export default function Index() {
   return (
@@ -45,5 +52,3 @@ export default function Index() {
     </main>
   );
 }
-
-export function meta() {}

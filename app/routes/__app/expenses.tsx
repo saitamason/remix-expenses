@@ -1,10 +1,16 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import ExpensesList from "~/components/expenses/ExpensesList";
 import { FaPlus, FaDownload } from "react-icons/fa";
 import { getExpenses } from "~/data/expenses.server";
 import type { Expense } from "~/types";
 import { requireUserSession } from "~/data/auth.server";
+
+export const meta: MetaFunction = () => ({
+  title: "Expenses List - RemixExpenses",
+  description:
+    "All your expenses in one place. View, edit or delete expenses in this comfortable list view.",
+});
 
 export default function ExpensesLayout() {
   const expenses: Expense[] = useLoaderData();

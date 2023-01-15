@@ -1,4 +1,4 @@
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { useNavigate } from "@remix-run/react";
 import ExpenseForm from "~/components/expenses/ExpenseForm";
@@ -6,6 +6,18 @@ import Modal from "~/components/util/Modal";
 import { deleteExpense, updateExpense } from "~/data/expenses.server";
 import { validateExpenseInput } from "~/data/validation.server";
 import type { Expense } from "~/types";
+import type { Expense as PrismaExpense } from "@prisma/client";
+
+export const meta: MetaFunction = ({ params, parentsData }) => {
+  const expense: PrismaExpense = parentsData["routes/__app/expenses"].find(
+    (expense: PrismaExpense) => expense.id === params.id
+  );
+
+  return {
+    title: `${expense.title} - RemixExpenses`,
+    description: `Update information about expense titled ${expense.title}`,
+  };
+};
 
 export default function ExpenseDetailsPage() {
   const navigate = useNavigate();

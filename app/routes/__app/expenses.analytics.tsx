@@ -1,13 +1,19 @@
 import ExpenseStatistics from "~/components/expenses/ExpenseStatistics";
 import Chart from "~/components/expenses/Chart";
 import { useCatch, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import type { Expense } from "~/types";
 import type { CatchBoundaryComponent } from "@remix-run/server-runtime/dist/routeModules";
 import { getExpenses } from "~/data/expenses.server";
 import { json } from "react-router";
 import Error from "~/components/util/Error";
 import { requireUserSession } from "~/data/auth.server";
+
+export const meta: MetaFunction = () => ({
+  title: "Analytics - RemixExpenses",
+  description:
+    "Your expenses analyzed. See full analytics for your expenses in the past 12 months.",
+});
 
 export default function ExpensesAnalyticsPage() {
   const expenses: Expense[] = useLoaderData();

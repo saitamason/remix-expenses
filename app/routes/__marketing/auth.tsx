@@ -1,4 +1,8 @@
-import type { ActionFunction, LinksFunction } from "@remix-run/node";
+import type {
+  ActionFunction,
+  LinksFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import type { Credentials } from "~/types";
 import type { HttpError } from "~/data/auth.server";
 import { login } from "~/data/auth.server";
@@ -6,6 +10,11 @@ import { signup } from "~/data/auth.server";
 import AuthForm from "~/components/auth/AuthForm";
 import authStyles from "~/styles/auth.css";
 import { validateCredentials } from "~/data/validation.server";
+
+export const meta: MetaFunction = () => ({
+  title: "Login or Create New Account - RemixExpenses",
+  description: "Login or create a new account in RemixExpenses app!",
+});
 
 export default function AuthPage() {
   return <AuthForm />;
