@@ -34,6 +34,16 @@ const createUserSession = async (userId: string, redirectPath: string) => {
   });
 };
 
+export const getUserFromSession = async (request: Request) => {
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+  const userId = session.get("userId");
+
+  if (!userId) return null;
+  return userId;
+};
+
 export const signup = async ({ email, password }: Credentials) => {
   const existingUser = await prisma.user.findFirst({ where: { email } });
 
