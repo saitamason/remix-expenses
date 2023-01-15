@@ -60,6 +60,8 @@ export const requireUserSession = async (request: Request) => {
   const userId = await getUserFromSession(request);
 
   if (!userId) throw redirect("/auth?mode=login");
+
+  return userId as string;
 };
 
 export const signup = async ({ email, password }: Credentials) => {
