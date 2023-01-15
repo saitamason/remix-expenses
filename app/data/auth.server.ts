@@ -1,9 +1,8 @@
 import { hash, compare } from "bcryptjs";
-import { createCookieSessionStorage } from "@remix-run/node";
+import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
 import { prisma } from "./database.server";
 import type { Credentials } from "~/types";
-import { redirect } from "react-router";
 
 export class HttpError extends Error {
   constructor(message: string, public status: number) {
@@ -38,10 +37,23 @@ export const getUserFromSession = async (request: Request) => {
   const session = await sessionStorage.getSession(
     request.headers.get("Cookie")
   );
+
   const userId = session.get("userId");
 
   if (!userId) return null;
   return userId;
+};
+
+export const destroyUserSession = async (request: Request) => {
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+
+  return redirect("/", {
+    headers: {
+      "Set-Cookie": await sessionStorage.destroySession(session),
+    },
+  });
 };
 
 export const signup = async ({ email, password }: Credentials) => {

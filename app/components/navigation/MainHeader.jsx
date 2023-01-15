@@ -1,4 +1,4 @@
-import { Link, NavLink, useLoaderData } from "@remix-run/react";
+import { Form, Link, NavLink, useLoaderData } from "@remix-run/react";
 import Logo from "../util/Logo";
 
 function MainHeader() {
@@ -21,9 +21,9 @@ function MainHeader() {
         <ul>
           <li>
             {userId && (
-              <form>
+              <Form method="post" action="/logout" id="logout-form">
                 <button className="cta-alt">Logout</button>
-              </form>
+              </Form>
             )}
             {!userId && (
               <Link to="/auth" className="cta">
