@@ -14,6 +14,7 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
+  useMatches,
 } from "@remix-run/react";
 
 import Error from "~/components/util/Error";
@@ -29,6 +30,10 @@ const Document = ({
   title,
   children,
 }: PropsWithChildren<{ title?: string }>) => {
+  const matches = useMatches();
+
+  const disableJS = matches.some((match) => match.handle?.disableJS);
+
   return (
     <html lang="en">
       <head>
@@ -49,7 +54,7 @@ const Document = ({
       <body>
         {children}
         <ScrollRestoration />
-        <Scripts />
+        {!disableJS && <Scripts />}
         <LiveReload />
       </body>
     </html>

@@ -51,3 +51,5 @@ export const headers = ({ parentHeaders }: { [k: string]: Headers }) => {
     "Cache-Control": parentHeaders.get("Cache-Control"),
   };
 };
+
+export const handle = { disableJS: true };
