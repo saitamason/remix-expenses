@@ -52,3 +52,9 @@ export default function Index() {
     </main>
   );
 }
+
+export const headers = ({ parentHeaders }: { [k: string]: Headers }) => {
+  return {
+    "Cache-Control": parentHeaders.get("Cache-Control"),
+  };
+};

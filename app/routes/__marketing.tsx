@@ -1,4 +1,8 @@
-import type { LinksFunction, LoaderFunction } from "@remix-run/node";
+import type {
+  HeadersFunction,
+  LinksFunction,
+  LoaderFunction,
+} from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import MainHeader from "~/components/navigation/MainHeader";
 import { getUserFromSession } from "~/data/auth.server";
@@ -19,3 +23,7 @@ export const loader: LoaderFunction = ({ request }) =>
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: marketingStyles },
 ];
+
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": "max-age=3600",
+});

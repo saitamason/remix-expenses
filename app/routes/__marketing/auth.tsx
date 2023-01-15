@@ -48,3 +48,9 @@ export const action: ActionFunction = async ({ request }) => {
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: authStyles },
 ];
+
+export const headers = ({ parentHeaders }: { [k: string]: Headers }) => {
+  return {
+    "Cache-Control": parentHeaders.get("Cache-Control"),
+  };
+};
