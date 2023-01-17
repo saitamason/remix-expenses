@@ -33,7 +33,7 @@ export default function ExpenseDetailsPage() {
 export const action: ActionFunction = async ({ params, request }) => {
   const expenseId = params.id!;
 
-  if (request.method === "PATH") {
+  if (request.method === "POST") {
     const formData = await request.formData();
     const expenseData = Object.fromEntries(formData);
 
