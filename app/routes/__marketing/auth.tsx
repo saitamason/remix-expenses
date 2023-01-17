@@ -40,7 +40,10 @@ export const action: ActionFunction = async ({ request }) => {
       return await signup(credentials);
     }
   } catch (error) {
-    if ((error as HttpError).status === 422)
+    if (
+      (error as HttpError).status === 422 ||
+      (error as HttpError).status === 401
+    )
       return { credentials: (error as HttpError).message };
   }
 };
